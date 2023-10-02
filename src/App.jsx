@@ -7,7 +7,7 @@ function App() {
 
   const [bord, setBord] = useState(Array(9).fill(""));
   const [move, setMove] = useState("X");
-  const [win, setWin] = useState("");
+  const [winer, setWiner] = useState("");
 
   const checkWin = (bordCopy) => {
     const conditions=[
@@ -30,16 +30,19 @@ function App() {
   }
 
 const handleClick = (index) => {
+  if(winer){
+    return
+  }
   const bordCopy = [...bord];
 if(bordCopy[index] !== ""){
-  alert("Already Clicked")
   return
 }
   bordCopy[index] = move;
   setBord(bordCopy)
-  const win = checkWin(bordCopy); 
+  const win = checkWin(bordCopy);
+
   if(win){
-    setWin(move);
+    setWiner(move);
   }
   setMove(move === "X" ? "O" : "X")
 }
@@ -48,7 +51,7 @@ const resetGame = () => {
  const bordCopy = [...bord];
  bordCopy.fill("");
  setBord(bordCopy);
- setWin("")
+ setWiner("")
 }
 
 
@@ -61,7 +64,7 @@ const resetGame = () => {
         <div className='mainBody'>
           <div className='ticTacContainer'> 
           <h2>Tic Tac Toe Game</h2>
-          <h3>{win && `Congratulation ${win} is Winer`}</h3>
+          <h3>{winer && `Congratulation ${winer} is Winer`}</h3>
             <table>
               <tbody>
                 <tr>
